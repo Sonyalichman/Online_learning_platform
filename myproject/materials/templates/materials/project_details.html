@@ -1,0 +1,20 @@
+{% extends 'materials/base.html' %}
+
+{% block content %}
+<h2 class="mb-4">{{ project.title }}</h2>
+<p>{{ project.description }}</p>
+<p>Учасники:</p>
+<ul>
+    {% for participant in project.participants.all %}
+    <li>{{ participant.username }}</li>
+    {% endfor %}
+</ul>
+<h3>Коментарі</h3>
+<ul class="list-group">
+    {% for comment in project.comments.all %}
+    <li class="list-group-item">{{ comment.author }}: {{ comment.text }}</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'add_comment_to_project' project.pk %}" class="btn btn-link">Додати Коментар</a>
+<a href="{% url 'projects_list' %}" class="btn btn-secondary mt-3">Назад до Проектів</a>
+{% endblock %}

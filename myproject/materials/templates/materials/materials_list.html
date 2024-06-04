@@ -1,0 +1,29 @@
+{% extends 'materials/base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Матеріали</h2>
+<form method="get" action="" class="form-inline mb-3">
+    <input type="text" name="query" class="form-control mr-2" placeholder="Пошук матеріалів...">
+    <button type="submit" class="btn btn-primary">Пошук</button>
+</form>
+{% if materials %}
+<ul class="list-group">
+    {% for material in materials %}
+    <li class="list-group-item">
+        <strong>{{ material.title }}</strong> - {{ material.upload_date }} - {{ material.uploaded_by }}
+        <br>
+        <a href="{{ material.file.url }}">Завантажити</a>
+        <ul class="list-unstyled">
+            {% for comment in material.comments.all %}
+            <li>{{ comment.author }}: {{ comment.text }}</li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'add_comment_to_material' material.pk %}" class="btn btn-link">Додати Коментар</a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Немає матеріалів, що відповідають критеріям пошуку.</p>
+{% endif %}
+<a href="{% url 'upload_material' %}" class="btn btn-primary mt-3">Завантажити Новий Матеріал</a>
+{% endblock %}

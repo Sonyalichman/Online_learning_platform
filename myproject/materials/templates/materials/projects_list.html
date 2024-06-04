@@ -1,0 +1,17 @@
+{% extends 'materials/base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Проекти</h2>
+<form method="get" action="" class="form-inline mb-3">
+    <input type="text" name="query" class="form-control mr-2" placeholder="Пошук проектів...">
+    <button type="submit" class="btn btn-primary">Пошук</button>
+</form>
+<div class="list-group">
+    {% for project in projects %}
+    <a href="{% url 'project_details' project.pk %}" class="list-group-item list-group-item-action">
+        <strong>{{ project.title }}</strong> - {{ project.created_date }}
+    </a>
+    {% endfor %}
+</div>
+<a href="{% url 'create_project' %}" class="btn btn-primary mt-3">Створити Новий Проект</a>
+{% endblock %}
